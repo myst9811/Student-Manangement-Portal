@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta, timezone
 
+import bcrypt
 from jose import JWTError, jwt
 from jose.exceptions import ExpiredSignatureError
-from passlib.context import CryptContext
 
 from app.core.config import settings
 from app.core.exceptions import ExpiredTokenException, ForbiddenException, InvalidTokenException, MissingTokenException
@@ -10,15 +10,13 @@ from app.core.exceptions import ExpiredTokenException, ForbiddenException, Inval
 ROLE_ADMIN = "admin"
 ROLE_STAFF = "staff"
 
-_pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 def hash_password(password: str) -> str:
-    return _pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return _pwd_context.verify(plain, hashed)
+    return bcrypt.checkpw(plain.encode(), hashed.encode())
 
 
 def create_access_token(user_id: int, email: str, role: str) -> str:
