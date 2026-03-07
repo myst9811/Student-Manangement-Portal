@@ -1,3 +1,7 @@
 export default function NotFoundPage() {
-  return <div className="p-8 text-foreground">NotFoundPage — coming soon</div>
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
+      <p className="text-gray-400 text-sm">NotFoundPage — coming in next phase</p>
+    </div>
+  )
 }
