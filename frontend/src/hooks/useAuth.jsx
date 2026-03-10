@@ -3,8 +3,19 @@ import { authApi } from '@/api/auth'
 
 const AuthContext = createContext(null)
 
+function decodeToken(token) {
+  try {
+    const payload = token.split('.')[1]
+    return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')))
+  } catch {
+    return null
+  }
+}
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(() => localStorage.getItem('access_token'))
+
+  const user = token ? decodeToken(token) : null
 
   const login = useCallback(async (email, password) => {
     const response = await authApi.login(email, password)
@@ -22,7 +33,7 @@ export function AuthProvider({ children }) {
   const isAuthenticated = Boolean(token)
 
   return (
-    <AuthContext.Provider value={{ token, isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ token, user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

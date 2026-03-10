@@ -18,7 +18,7 @@ const PAGE_TITLES = {
 }
 
 function Sidebar({ isOpen, onClose }) {
-  const { logout } = useAuth()
+  const { logout, user } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -89,7 +89,10 @@ function Sidebar({ isOpen, onClose }) {
         <div className="p-4 border-t border-slate-800">
           <div className="mb-3 px-1">
             <p className="text-xs text-slate-400 mb-0.5">Logged in as</p>
-            <p className="text-sm font-medium text-slate-200 truncate">admin@school.edu</p>
+            <p className="text-sm font-medium text-slate-200 truncate">{user?.email}</p>
+            {user?.role && (
+              <p className="text-xs text-blue-400 capitalize mt-0.5">{user.role}</p>
+            )}
           </div>
           <Button
             onClick={handleLogout}
