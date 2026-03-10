@@ -14,8 +14,8 @@ from app.core.security import hash_password
 from app.models.user import User
 
 USERS = [
-    {"email": "admin@school.edu",  "password": "admin1234", "role": "admin"},
-    {"email": "staff@school.edu",  "password": "staff1234", "role": "staff"},
+    {"email": "admin@school.edu",  "password": "Adm!nSMS2026", "role": "admin"},
+    {"email": "staff@school.edu",  "password": "St@ffSMS2026", "role": "staff"},
 ]
 
 engine = create_async_engine(settings.DATABASE_URL, echo=False)
